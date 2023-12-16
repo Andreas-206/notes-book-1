@@ -14,3 +14,13 @@
  * прибрати завдання зі списку.
  * Список із завданнями має бути доступним після перезавантаження сторінки.
  */
+import { refs } from "./js/refs"
+refs.form.addEventListener("submit", event => {
+    event.preventDefault();
+    const submitObject = {};
+    new FormData(event.currentTarget).forEach((e, i) => {
+        submitObject[i] = e;
+    }) 
+    refs.form.reset();
+    console.log(submitObject);
+})
