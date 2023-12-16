@@ -15,18 +15,10 @@
  * Список із завданнями має бути доступним після перезавантаження сторінки.
  */
 import { refs } from './js/refs';
-import { add } from './js/localstorageAPI';
-import { createNoteMarkup } from './js/createNoteMarkup';
-import { createNote } from './js/createNote';
+import { getAllNotes } from './js/localstorageAPI';
+import { createNotesMarkup } from './js/createMarkup';
+import { submitMainForm } from './js/formEvents';
 
-refs.form.addEventListener('submit', event => {
-  event.preventDefault();
-  const submitObject = createNote(event);
+refs.taskList.innerHTML = createNotesMarkup(getAllNotes());
 
-  refs.form.reset();
-
-  add(submitObject);
-
-  const markup = createNoteMarkup(submitObject);
-  refs.taskList.insertAdjacentHTML('beforeend', markup);
-});
+refs.form.addEventListener('submit', submitMainForm);
