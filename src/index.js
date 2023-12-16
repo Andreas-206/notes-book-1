@@ -14,13 +14,19 @@
  * прибрати завдання зі списку.
  * Список із завданнями має бути доступним після перезавантаження сторінки.
  */
-import { refs } from "./js/refs"
-refs.form.addEventListener("submit", event => {
-    event.preventDefault();
-    const submitObject = {};
-    new FormData(event.currentTarget).forEach((e, i) => {
-        submitObject[i] = e;
-    }) 
-    refs.form.reset();
-    console.log(submitObject);
-})
+import { refs } from './js/refs';
+import { add } from './js/localstorageAPI';
+import { createNoteMarkup } from './js/createNoteMarkup';
+import { createNote } from './js/createNote';
+
+refs.form.addEventListener('submit', event => {
+  event.preventDefault();
+  const submitObject = createNote(event);
+
+  refs.form.reset();
+
+  add(submitObject);
+
+  const markup = createNoteMarkup(submitObject);
+  refs.taskList.insertAdjacentHTML('beforeend', markup);
+});
